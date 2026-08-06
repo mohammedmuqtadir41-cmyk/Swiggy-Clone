@@ -1,0 +1,678 @@
+/* ==========================================
+   1. GLOBAL STYLES & RESET
+   ========================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  background-color: #f6f7fb;
+  color: #282c3f;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================
+   2. HEADER & NAVIGATION (LOGO FIXED & ENLARGED)
+   ========================================== */
+.header {
+  height: 85px; /* Increased slightly to accommodate a larger logo comfortably */
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+#logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+#logo img {
+  width: 70px;  /* Enlarged from your previous size for better visibility */
+  height: 70px; /* Kept perfectly square before rounding so it stays a true circle */
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Adds a crisp edge to the logo */
+  transition: transform 0.2s ease-in-out;
+}
+
+#logo img:hover {
+  transform: scale(1.05); /* Clean micro-interaction on hover */
+}
+
+#search-bar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin: 0 40px;
+  max-width: 500px;
+}
+
+#search-bar input {
+  width: 100%;
+  padding: 12px 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 30px;
+  outline: none;
+  font-size: 15px;
+  color: #3d3d3d;
+  background-color: #f9fafb;
+  transition: all 0.3s ease;
+}
+
+#search-bar input:focus {
+  background-color: #ffffff;
+  border-color: #fc8019;
+  box-shadow: 0 0 0 4px rgba(252, 128, 25, 0.15);
+}
+
+/* Navigation System Fixes */
+.nav-items ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 12px;
+}
+
+.nav-items a {
+  display: block;
+  text-decoration: none;
+  color: #3d3d3d;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+
+.nav-items a:hover {
+  color: #fc8019;
+  background-color: rgba(252, 128, 25, 0.08);
+}
+
+.nav-items a.active {
+  background-color: #fc8019;
+  color: #ffffff;
+}
+
+/* ==========================================
+   3. FILTERS & MAIN CONTAINER
+   ========================================== */
+.body {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 30px 40px;
+}
+
+.filter-container {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0 25px 0;
+  flex-wrap: wrap;
+}
+
+.filter-container button {
+  background: #ffffff;
+  color: #494949;
+  border: 1px solid #d4d5d9;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  transition: all 0.2s ease;
+}
+
+.filter-container button:hover {
+  background: #fc8019;
+  color: #ffffff;
+  border-color: #fc8019;
+}
+
+.filter-container button:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================
+   4. RESTAURANT CARDS
+   ========================================== */
+.res-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 32px;
+  margin-top: 10px;
+}
+
+.res-card {
+  width: 280px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.res-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.res-logo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.res-card h3,
+.res-card h4 {
+  padding: 0 16px;
+}
+
+.res-title {
+  margin-top: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #282c3f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.res-cuisine {
+  margin-top: 6px;
+  color: #686b78;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.res-rating {
+  margin-top: 8px;
+  color: #48c479; /* Premium Green rating color */
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.res-address {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  color: #93959f;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================
+   5. TOP CAROUSEL & ITEMS
+   ========================================== */
+.top-container {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.top-container h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #282c3f;
+  margin-bottom: 20px;
+}
+
+.top-images {
+  display: flex;
+  overflow-x: auto;
+  gap: 24px;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+}
+
+.top-images::-webkit-scrollbar {
+  display: none;
+}
+
+.food-item {
+  min-width: 130px;
+  text-align: center;
+}
+
+.food-item img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.food-item img:hover {
+  transform: scale(1.06);
+}
+
+/* ==========================================
+   6. SHIMMER EFFECT / LOADING STATES
+   ========================================== */
+.shimmer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 32px;
+}
+
+.shimmer-card {
+  width: 280px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  padding-bottom: 16px;
+}
+
+.shimmer-img, .shimmer-title, .shimmer-cuisine, .shimmer-rating, .shimmer-deliveryTime, .topShimmer-p, .topShimmer-item {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
+.shimmer-img {
+  height: 180px;
+  width: 100%;
+}
+
+.shimmer-title {
+  width: 70%;
+  height: 18px;
+  margin: 14px 16px 0 16px;
+  border-radius: 4px;
+}
+
+.shimmer-cuisine {
+  margin: 8px 16px 0 16px;
+  width: 85%;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.shimmer-rating {
+  margin: 8px 16px 0 16px;
+  width: 45%;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.shimmer-deliveryTime {
+  margin: 8px 16px 0 16px;
+  width: 60%;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.topShimmer-container {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.topShimmer-p {
+  height: 28px;
+  width: 240px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.topShimmer-images {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.topShimmer-item {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ==========================================
+   7. FOOTER
+   ========================================== */
+.footer {
+  background: #0f0f12;
+  color: #ffffff;
+  margin-top: 80px;
+}
+
+.footer-container {
+  max-width: 1300px;
+  margin: auto;
+  padding: 60px 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  flex: 2;
+  min-width: 280px;
+}
+
+.footer-brand h2 {
+  color: #fc8019;
+  margin-bottom: 16px;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.footer-brand p {
+  color: #a9abb3;
+  line-height: 1.7;
+  max-width: 360px;
+  font-size: 14px;
+}
+
+.footer-links,
+.footer-contact {
+  flex: 1;
+  min-width: 160px;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+  cursor: pointer;
+  color: #a9abb3;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.footer-links li:hover {
+  color: #fc8019;
+}
+
+.footer-contact p {
+  margin-bottom: 12px;
+  color: #a9abb3;
+  font-size: 14px;
+}
+
+.footer-bottom {
+  border-top: 1px solid #22252e;
+  text-align: center;
+  padding: 24px;
+  color: #7e808c;
+  font-size: 0.9rem;
+}
+
+/* ==========================================
+   8. RESPONSIVE DESIGN (MEDIA QUERIES)
+   ========================================== */
+@media (max-width: 1024px) {
+  .res-container, .shimmer-container {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 20px;
+    height: auto;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  #search-bar {
+    margin: 0;
+    width: 100%;
+  }
+
+  .body {
+    padding: 20px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .footer-brand p {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+.res-link{
+  text-decoration: none;
+  color: inherit;
+}
+
+.swiggy-filter-btn {
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #3f4255;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.swiggy-filter-btn.active {
+  background-color: #fc8019;
+  color: wheat;
+  border-color: white;
+  font-weight: 520;
+}
+.swiggy-filter-btn:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.swiggy-filter-btn.active:hover {
+  background-color: #e66e0d;
+}
+
+/* Centered container holding the loader */
+.swiggy-loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh; /* Takes up half the viewport height */
+  font-family: Arial, sans-serif;
+}
+
+/* Bouncing food emoji */
+.swiggy-loader-emoji {
+  font-size: 32px;
+  margin-bottom: 12px;
+  animation: swiggyBounce 0.6s infinite alternate ease-in-out;
+}
+
+/* Text style matching Swiggy's corporate branding */
+.swiggy-loader-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fc8019; /* Swiggy Signature Orange */
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  text-align: center;
+}
+
+/* Keyframes for the bounce animation */
+@keyframes swiggyBounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-15px); /* Bounces up by 15 pixels */
+  }
+}
+/* ================= FOOTER ================= */
+
+.footer {
+  background: #1f1f1f;
+  color: #fff;
+  margin-top: 60px;
+  padding-top: 50px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  flex-wrap: wrap;
+  padding: 0 40px 40px;
+}
+
+.footer-brand {
+  flex: 1;
+  min-width: 260px;
+}
+
+.footer-brand h2 {
+  color: #ff6b00;
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.footer-brand p {
+  color: #cfcfcf;
+  line-height: 1.8;
+}
+
+.footer-links {
+  min-width: 180px;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  color: #ff6b00;
+  margin-bottom: 18px;
+  font-size: 20px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin: 12px 0;
+}
+
+.footer-links a {
+  color: #ddd;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer-links a:hover {
+  color: #ff6b00;
+  padding-left: 6px;
+}
+
+.footer-contact {
+  min-width: 250px;
+}
+
+.footer-contact p {
+  margin: 12px 0;
+  color: #cfcfcf;
+}
+
+.footer-bottom {
+  border-top: 1px solid #444;
+  text-align: center;
+  padding: 20px;
+  color: #bbb;
+  font-size: 15px;
+}
+
+/* Container framework that aligns the image stack */
+.res-card-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px; /* Matches modern Swiggy rounded card structures */
+}
+
+/* Ensure the image container has position relative so the overlay snaps perfectly */
+.res-img-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3; /* Standard card image ratio */
+}
+
+/* 
+ * The Authentic Swiggy Overlay:
+ * Places a dark-to-transparent scrim gradient across the lower 35% of the card image
+ */
+.swiggy-discount-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 24px 12px 8px 12px; /* Generous top padding accommodates the smooth gradient blend */
+  background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 100%);
+  z-index: 2;
+  box-sizing: border-box;
+  pointer-events: none; /* Allows click events to pass straight through cleanly */
+}
+
+/* Bold, high-contrast typography style matching Swiggy Pro text elements */
+.discount-text-main {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.15rem;
+  font-weight: 800; /* Ultra-bold layout weights */
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Gracefully truncates exceptionally long string combinations */
+}
+
+/* Fix structure positioning so image stays behind overlay elements */
+.res-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
