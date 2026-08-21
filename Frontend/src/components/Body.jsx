@@ -1,8 +1,6 @@
-import { swiggyURL } from "../Utils/constants";
 import RestaurantCard, { withDiscountLabel } from "./RestaurantCard";
 import { Shimmer } from "./RestaurantSkeleton";
 import { useContext, useEffect, useState } from "react";
-import Top from "./Top";
 import { Link } from "react-router";
 import HotelListContext from "../Utils/HotelListContext";
 
@@ -17,14 +15,16 @@ const Body = () => {
   }, []);
 
   const fetchRestaurantData = async () => {
-    const response = await fetch(swiggyURL);
-    const data = await response.json();
-    const restaurants =
-      data.data.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants || [];
+    const response = await fetch("http://localhost:8080/api/restaurants");
 
-    setHotelList(restaurants);
-    setAllItems(restaurants);
+    if(!response.ok){
+      consol.log("Failed to fetch restaurants")
+    }
+    const data = await response.json();
+
+
+    setHotelList(data.restaurants);
+    setAllItems(data.restaurants);
   };
 
   if (!hotelList || hotelList.length === 0) {
@@ -38,13 +38,13 @@ const Body = () => {
           return (
             <Link
               className="res-link"
-              to={`/restaurant/${resObj?.info?.id}`}
-              key={resObj?.info?.id}
+              to={`/restaurant/${resObj?.restaurantId}`}
+              key={resObj?.restaurantId}
             >
-              {resObj?.info?.aggregatedDiscountInfoV3 ? (
-                <DiscountRestaurantCard resDetail={resObj?.info} />
+              {resObj.offer ? (
+                <DiscountRestaurantCard resDetail={resObj} />
               ) : (
-                <RestaurantCard resDetail={resObj?.info} />
+                <RestaurantCard resDetail={resObj} />
               )}
             </Link>
           );
