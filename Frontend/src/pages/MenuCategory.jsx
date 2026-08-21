@@ -2,23 +2,19 @@ import { useState } from "react";
 import MenuItem from "./MenuItem";
 
 const MenuCategory = ({ categoryInfo }) => {
-  console.log(categoryInfo);
-  const { title, itemCards } = categoryInfo;
+  const { title, items } = categoryInfo;
 
-  const [isOpen, setIsOpen] = useState(false);
-  // const [showIndex, setShowIndex] = useState(null);
-
+  const [isOpen, setIsOpen] = useState(false)
 
   function toggleBody() {
     setIsOpen(!isOpen);
   }
 
-  //   const itemCards = categoryInfo.itemCards;
   return (
     <div className="category-accordian">
       <div className="category-header" onClick={toggleBody}>
         <h3>
-          {title} ({itemCards.length})
+          {title} ({items.length})
         </h3>
         <span className={`chevron ${isOpen ? "open" : ""}`}>▼</span>
       </div>
@@ -28,7 +24,7 @@ const MenuCategory = ({ categoryInfo }) => {
           <h2>{categoryInfo.title}</h2>
 
           {itemCards.map((item) => (
-            <MenuItem details={item.card.info} key={item.card.info.id} />
+            <MenuItem details={item} key={item._id} />
           ))}
         </div>
       ) }

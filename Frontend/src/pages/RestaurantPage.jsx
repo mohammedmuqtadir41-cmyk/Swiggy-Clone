@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const RestaurantPage = () => {
   const { resId } = useParams();
 
-  const {restaurant} = useRestaurantMenu(resId);
+  const {restaurant, menu} = useRestaurantMenu(resId);
 
   const [loadingIndex, setLoadingIndex] = useState(0);
 
@@ -27,7 +27,7 @@ const RestaurantPage = () => {
     return () => clearInterval(interval);
   }, [restaurant]);
 
-  if (restaurant === null) {
+  if (restaurant === null || menu === null) {
     return (
       <div className="swiggy-loader-container">
         <div className="swiggy-loader-emoji">🍔</div>
@@ -40,9 +40,10 @@ const RestaurantPage = () => {
     <div className="restaurant-page">
       <RestaurantInfo restaurant={restaurant} />
 
-      <div className="menu-coming-soon">
-        <h2>Menu coming next 🍽️</h2>
-        <p>We're now building the backend menu system.</p>
+      <div className="restaurant-menu">
+        {menu?.categories?.map((category) => {
+          <MenuCategory key={category._id} categoryInfo={category} />
+        })}
       </div>
     </div>
   );
