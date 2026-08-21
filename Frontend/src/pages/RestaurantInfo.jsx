@@ -1,44 +1,76 @@
 import { imgBaseURL } from "../Utils/constants";
 
-const RestaurantInfo = ({ menu }) => {
-const info = menu?.data?.cards[2]?.card?.card?.info || {};
-
+const RestaurantInfo = ({ restaurant }) => {
   const {
     name,
-    avgRatingString,
-    costForTwo,
-    totalRatingsString,
-    cloudinaryImageId,
     cuisines,
-  } = info;
+    rating,
+    totalRatings,
+    costForTwo,
+    deliveryTime,
+    areaName,
+    locality,
+    image,
+    veg,
+    isOpen,
+  } = restaurant;
 
-const displayCost = costForTwo || (costForTwo ? `₹${costForTwo / 100} for two` : "");
   return (
     <div className="restaurant-header">
       <div className="restaurant-header-text">
         <h1 className="restaurant-title">{name}</h1>
-        <p className="restaurant-cuisines">{cuisines?.join(", ")}</p>
-        
+
+        <p className="restaurant-cuisines">
+          {cuisines?.join(", ")}
+        </p>
+
+        <p className="restaurant-location">
+          📍 {areaName}
+          {locality ? `, ${locality}` : ""}
+        </p>
+
         <div className="restaurant-meta">
-          <div className="restaurant-item-rating">
-            <span>⭐ {avgRatingString}</span>
-            <span>{totalRatingsString}</span>
+          <div className="meta-item rating">
+            <span>⭐ {rating}</span>
+            <small>{totalRatings} ratings</small>
           </div>
-          <div className="restaurant-item-divider">|</div>
+
+          <div className="meta-item divider">|</div>
+
           <div className="meta-item">
-            <span>{displayCost}</span>
+            <span>₹{costForTwo} for two</span>
+            <small>Cost for two</small>
+          </div>
+
+          <div className="meta-item divider">|</div>
+
+          <div className="meta-item">
+            <span>{deliveryTime} mins</span>
+            <small>Delivery time</small>
           </div>
         </div>
+
+        {!isOpen && (
+          <p className="restaurant-closed">
+            Currently closed
+          </p>
+        )}
+
+        {veg && (
+          <p className="restaurant-veg">
+            🟢 Pure Veg
+          </p>
+        )}
       </div>
-      
-      {cloudinaryImageId && ( 
-      <div className="restaurant-header-img-wrapper">
-        <img 
-          className="restaurant-hero-img" 
-          src={imgBaseURL + cloudinaryImageId} 
-          alt={name} 
-        />
-      </div>
+
+      {image && (
+        <div className="restaurant-header-img-wrapper">
+          <img
+            className="restaurant-hero-img"
+            src={`${imgBaseURL}${image}`}
+            alt={name}
+          />
+        </div>
       )}
     </div>
   );

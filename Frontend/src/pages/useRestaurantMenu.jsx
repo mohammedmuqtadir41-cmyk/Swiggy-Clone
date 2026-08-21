@@ -1,39 +1,37 @@
 import react, { useEffect, useState } from "react";
-import { MenuAPI } from "../Utils/constants";
-import { useParams } from "react-router";
+
 
 const useRestaurantMenu = (resId) => {
-//   const { resId } = useParams();
-  const [menu, setMenu] = useState(null);
-  const [catagories, setCategories] = useState([]);
+
+  const [restaurant, setRestaurant] = useState(null);
 
   useEffect(() => {
-    if(!resId) return;
+    if (!resId) return;
+
     getRestaurantPage();
   }, [resId]);
 
   const getRestaurantPage = async () => {
-    try{
-    const response = await fetch(MenuAPI + resId);
-    const json = await response.json();
-    console.log(json);
-    setMenu(json);
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/restaurants/${resId}`,
+      );
 
-    const rawCards = json?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards || [];
-    const filteredCategories = rawCards.filter(
-      (category) => {
-        return (
-          category.card?.card?.["@type"] ===
-          "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-        ) 
-    });
-        setCategories(filteredCategories);
-      }catch (error) {
-        console.error("Error fetching the restaurant menu data:", error);
+      if (!response.ok) {
+        throw new Error("Failed to fetch restaurant");
+      }
+
+      const json = await response.json();
+
+      console.log("Restaurant data:", json);
+
+      setRestaurant(json.restaurant);
+
+    } catch (error) {
+      console.error("Error fetching the restaurant menu data:", error);
     }
   };
-  return {menu, catagories}
-
+  return {restaurant};
 };
 
 export default useRestaurantMenu;
