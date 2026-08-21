@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./src/Utils/Approuter";
-import About from "./src/pages/About";
-import Help from "./src/pages/Help";
+import App from "./Utils/Approuter";
+import About from "./pages/About";
+import Help from "./pages/Help";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import Error from "./src/pages/Error";
-import Body from "./src/components/Body";
-import Cart from "./src/pages/Cart";
-import Offers from "./src/pages/Offers";
-import Signin from "./src/pages/Signin";
-import RestaurantPage from "./src/pages/RestaurantPage";
+import Error from "./pages/Error";
+import Body from "./components/Body";
+import Cart from "./pages/Cart";
+import Offers from "./pages/Offers";
+import Signin from "./pages/Signin";
+import RestaurantPage from "./pages/RestaurantPage";
 
 const appRouter = createBrowserRouter([
   {

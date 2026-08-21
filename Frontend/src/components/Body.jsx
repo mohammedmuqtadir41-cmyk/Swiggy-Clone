@@ -1,4 +1,4 @@
-import { MenuURL, swiggyURL } from "../Utils/constants";
+import { swiggyURL } from "../Utils/constants";
 import RestaurantCard, { withDiscountLabel } from "./RestaurantCard";
 import { Shimmer } from "./RestaurantSkeleton";
 import { useContext, useEffect, useState } from "react";
