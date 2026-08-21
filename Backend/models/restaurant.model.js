@@ -1,39 +1,43 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const restaurantSchema = new mongoose.Schema(
-    {
-        restaurandId : {
-            type: String,
-            required: true,
-            unique: true
-        },
-        name: {
-            type: String,
-            required: true,
-        },
-        image: {
-            type: String,
-            required: true,
-        },
-        locality: {
-            type: String,
-            required: true,
-        },
-        areaName: {
-            type: String,
-            required: true,     
-        },
-        cuisines: [
-            {
-                type: String,
-            },
-        ],
+  {
+    restaurantId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    locality: {
+      type: String,
+      required: true,
+    },
+    areaName: {
+      type: String,
+      required: true,
+    },
+    cuisines: [
+      {
+        type: String,
+      },
+    ],
 
-        rating: {
-            type: Number,
-            default: 0,
-        },
-        costForTwo: {
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    totalRatings: {
+      type: String,
+      default: "0",
+    },
+    costForTwo: {
       type: Number,
       required: true,
     },
@@ -60,7 +64,7 @@ const restaurantSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = mongoose.model("Restaurant", restaurantSchema);
