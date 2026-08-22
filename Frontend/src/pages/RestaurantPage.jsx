@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const RestaurantPage = () => {
   const { resId } = useParams();
 
-  const {restaurant, menu} = useRestaurantMenu(resId);
+  const {restaurantInfo: restaurant, menu} = useRestaurantMenu(resId);
 
   const [loadingIndex, setLoadingIndex] = useState(0);
 

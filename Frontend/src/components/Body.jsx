@@ -18,7 +18,7 @@ const Body = () => {
     const response = await fetch("http://localhost:8080/api/restaurants");
 
     if(!response.ok){
-      consol.log("Failed to fetch restaurants")
+      console.log("Failed to fetch restaurants")
     }
     const data = await response.json();
 

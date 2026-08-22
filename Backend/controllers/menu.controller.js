@@ -1,28 +1,49 @@
 const Menu = require("../models/menu.model");
+const { getSwiggyMenu } = require("../services/swiggyMenu.service");
 
 const getRestaurantMenu = async (req, res) => {
   try {
     const { restaurantId } = req.params;
 
+    // Check database first
     const menu = await Menu.findOne({ restaurantId });
 
-    if (!menu) {
-      return res.status(404).json({
-        success: false,
-        message: "Menu not found",
+    if (menu) {
+      console.log("Menu found in database");
+
+      return res.status(200).json({
+        success: true,
+        source: "Database",
+        menu,
       });
     }
 
-    res.status(200).json({
+    console.log("Menu not found. Fetching from Swiggy");
+
+    const swiggyMenu = await getSwiggyMenu(restaurantId);
+
+    const savedMenu = await Menu.create({
+      restaurantId,
+      categories: swiggyMenu.categories,
+    });
+
+    console.log(
+      "Menu fetched from Swiggy and saved"
+    );
+
+    return res.status(200).json({
       success: true,
-      menu,
+      source: "Swiggy",
+      menu: savedMenu,
     });
   } catch (error) {
-    console.error("Error fetching menu:", error);
+    console.error("FULL ERROR:");
+    console.error(error.response?.data || error.message);
 
-    res.status(500).json({
+    return res.status(502).json({
       success: false,
-      message: "Failed to fetch menu",
+      message:  "Restaurant menu is unavailable right now",
+      error: error.message,
     });
   }
 };

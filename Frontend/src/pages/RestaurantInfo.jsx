@@ -1,6 +1,8 @@
 import { imgBaseURL } from "../Utils/constants";
 
 const RestaurantInfo = ({ restaurant }) => {
+  if (!restaurant) return null;
+
   const {
     name,
     cuisines,
@@ -20,9 +22,7 @@ const RestaurantInfo = ({ restaurant }) => {
       <div className="restaurant-header-text">
         <h1 className="restaurant-title">{name}</h1>
 
-        <p className="restaurant-cuisines">
-          {cuisines?.join(", ")}
-        </p>
+        <p className="restaurant-cuisines">{cuisines?.join(", ")}</p>
 
         <p className="restaurant-location">
           📍 {areaName}
@@ -50,17 +50,9 @@ const RestaurantInfo = ({ restaurant }) => {
           </div>
         </div>
 
-        {!isOpen && (
-          <p className="restaurant-closed">
-            Currently closed
-          </p>
-        )}
+        {!isOpen && <p className="restaurant-closed">Currently closed</p>}
 
-        {veg && (
-          <p className="restaurant-veg">
-            🟢 Pure Veg
-          </p>
-        )}
+        {veg && <p className="restaurant-veg">🟢 Pure Veg</p>}
       </div>
 
       {image && (
