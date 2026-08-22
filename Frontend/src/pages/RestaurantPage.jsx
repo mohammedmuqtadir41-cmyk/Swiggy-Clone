@@ -41,9 +41,9 @@ const RestaurantPage = () => {
       <RestaurantInfo restaurant={restaurant} />
 
       <div className="restaurant-menu">
-        {menu?.categories?.map((category) => {
+        {menu?.categories?.map((category) => (
           <MenuCategory key={category._id} categoryInfo={category} />
-        })}
+        ))}
       </div>
     </div>
   );

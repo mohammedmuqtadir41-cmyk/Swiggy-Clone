@@ -23,7 +23,7 @@ const MenuCategory = ({ categoryInfo }) => {
         <div className="category-body">
           <h2>{categoryInfo.title}</h2>
 
-          {itemCards.map((item) => (
+          {items.map((item) => (
             <MenuItem details={item} key={item._id} />
           ))}
         </div>
