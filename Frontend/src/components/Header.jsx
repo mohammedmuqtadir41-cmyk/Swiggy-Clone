@@ -9,20 +9,28 @@ const Header = () => {
   const [fitlerToggle, setFilterToggle] = useState(false);
 
   function setFilter() {
-    // console.log("button was clicked");
+  if (!fitlerToggle) {
+    const filteredArray = hotelList.filter(
+      (restaurant) => restaurant.info.avgRating > 4.1
+    );
 
-    if (!fitlerToggle) {
-      const filteredArray = hotelList.filter(
-        (restaurant) => restaurant.info.avgRating > 4.1,
-      );
-
-      setHotelList(filteredArray);
-      setFilterToggle(true);
-    } else {
-      setFilterToggle(false);
-      setHotelList(allItems);
-    }
+    setHotelList(filteredArray);
+    setFilterToggle(true);
+  } else {
+    setFilterToggle(false);
+    setHotelList(allItems);
   }
+}
+
+function handleSearch(e) {
+  const searchValue = e.target.value.trim().toLowerCase();
+
+  const filteredRestaurants = allItems.filter((restaurant) =>
+    restaurant.info.name.toLowerCase().includes(searchValue)
+  );
+
+  setHotelList(filteredRestaurants);
+}
 
   return (
     <header className="header">
@@ -33,18 +41,18 @@ const Header = () => {
       </div>
 
       <div id="search-bar">
-        <input type="text"
-        onChange={(e) => {
-          const filterList = allItems.filter((restaurant) => {
-            if(restaurant.info.name.toLowerCase().includes(e.target.value) === true){
-              return true;
-            } else {
-              return false;
-            }
-          })
-          setHotelList(filterList);
-        }} />
-      </div>
+  <input type="text"
+  onChange={(e) => {
+    const filterList = allItems.filter((restaurant) => {
+      if(restaurant.info.name.toLowerCase().includes(e.target.value) === true){
+        return true;
+      } else {
+        return false;
+      }
+    })
+    setHotelList(filterList);
+  }} />
+</div>
 
       <div className="nav-items">
         <ul>
