@@ -10,26 +10,43 @@ const Body = () => {
 
   const DiscountRestaurantCard = withDiscountLabel(RestaurantCard);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     fetchRestaurantData();
   }, []);
 
   const fetchRestaurantData = async () => {
+  try {
     const response = await fetch("http://localhost:8080/api/restaurants");
 
-    if(!response.ok){
-      console.log("Failed to fetch restaurants")
+    if (!response.ok) {
+      throw new Error("Failed to fetch restaurants");
     }
-    const data = await response.json();
 
+    const data = await response.json();
 
     setHotelList(data.restaurants);
     setAllItems(data.restaurants);
-  };
-
-  if (!hotelList || hotelList.length === 0) {
-    return <Shimmer />;
+  } catch (error) {
+    console.error("Error fetching restaurants:", error);
+  } finally {
+    setLoading(false);
   }
+};
+
+  if (loading) {
+  return <Shimmer />;
+}
+
+if (hotelList.length === 0) {
+  return (
+    <div className="empty-state">
+      <h2>No restaurants found</h2>
+      <p>Try searching for a different restaurant.</p>
+    </div>
+  );
+}
 
   return (
     <div className="body">
