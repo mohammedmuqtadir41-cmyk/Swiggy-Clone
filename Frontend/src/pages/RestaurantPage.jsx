@@ -7,7 +7,12 @@ import { useEffect, useState } from "react";
 const RestaurantPage = () => {
   const { resId } = useParams();
 
-  const {restaurantInfo: restaurant, menu} = useRestaurantMenu(resId);
+  const {
+    restaurantInfo: restaurant,
+    menu,
+    menuLoading,
+    menuError,
+  } = useRestaurantMenu(resId);
 
   const [loadingIndex, setLoadingIndex] = useState(0);
 
@@ -19,19 +24,23 @@ const RestaurantPage = () => {
   ];
 
   useEffect(() => {
-    if (restaurant !== null) return;
+    if (!menuLoading) return;
 
     const interval = setInterval(() => {
       setLoadingIndex((prev) => (prev + 1) % phrases.length);
     }, 1000);
-    return () => clearInterval(interval);
-  }, [restaurant]);
 
-  if (restaurant === null || menu === null) {
+    return () => clearInterval(interval);
+  }, [menuLoading]);
+
+  // Restaurant itself is still loading
+  if (restaurant === null) {
     return (
       <div className="swiggy-loader-container">
         <div className="swiggy-loader-emoji">🍔</div>
-        <div className="swiggy-loader-text">{phrases[loadingIndex]}</div>
+        <div className="swiggy-loader-text">
+          {phrases[loadingIndex]}
+        </div>
       </div>
     );
   }
@@ -40,11 +49,55 @@ const RestaurantPage = () => {
     <div className="restaurant-page">
       <RestaurantInfo restaurant={restaurant} />
 
-      <div className="restaurant-menu">
-        {menu?.categories?.map((category) => (
-          <MenuCategory key={category._id} categoryInfo={category} />
-        ))}
-      </div>
+      {/* Menu is still loading */}
+      {menuLoading && (
+        <div className="swiggy-loader-container">
+          <div className="swiggy-loader-emoji">🍔</div>
+          <div className="swiggy-loader-text">
+            {phrases[loadingIndex]}
+          </div>
+        </div>
+      )}
+
+      {/* Menu is unavailable */}
+      {!menuLoading && menuError === "MENU_NOT_AVAILABLE" && (
+        <div className="menu-coming-soon">
+          <div className="menu-coming-soon-icon">🍽️</div>
+
+          <h2>Menu Coming Soon</h2>
+
+          <p>
+            We're still preparing the menu for this restaurant.
+            Please check back soon.
+          </p>
+        </div>
+      )}
+
+      {/* Unexpected menu error */}
+      {!menuLoading && menuError === "GENERAL_ERROR" && (
+        <div className="menu-coming-soon">
+          <div className="menu-coming-soon-icon">⚠️</div>
+
+          <h2>Menu Unavailable</h2>
+
+          <p>
+            We couldn't load this restaurant's menu right now.
+            Please try again later.
+          </p>
+        </div>
+      )}
+
+      {/* Menu successfully loaded */}
+      {!menuLoading && !menuError && menu && (
+        <div className="restaurant-menu">
+          {menu.categories?.map((category) => (
+            <MenuCategory
+              key={category._id}
+              categoryInfo={category}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
