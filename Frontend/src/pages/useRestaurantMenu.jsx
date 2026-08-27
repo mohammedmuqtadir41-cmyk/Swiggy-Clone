@@ -23,7 +23,7 @@ const useRestaurantMenu = (resId) => {
       console.log("Fetching restaurant from backend");
 
       const restaurantResponse = await fetch(
-        `http://localhost:8080/api/restaurants/${resId}`
+        `${import.meta.env.VITE_API_URL}/api/restaurants/${resId}`
       );
 
       if (!restaurantResponse.ok) {
@@ -36,7 +36,7 @@ const useRestaurantMenu = (resId) => {
 
       // Fetch restaurant menu
       const menuResponse = await fetch(
-        `http://localhost:8080/api/menu/${resId}`
+        `${import.meta.env.VITE_API_URL}/api/menu/${resId}`
       );
 
       // 404 means this restaurant does not have

@@ -18,8 +18,7 @@ const Body = () => {
 
   const fetchRestaurantData = async () => {
   try {
-    const response = await fetch("http://localhost:8080/api/restaurants");
-
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/restaurants`);
     if (!response.ok) {
       throw new Error("Failed to fetch restaurants");
     }
