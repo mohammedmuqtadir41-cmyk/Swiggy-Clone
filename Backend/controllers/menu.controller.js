@@ -1,49 +1,35 @@
 const Menu = require("../models/menu.model");
-const { getSwiggyMenu } = require("../services/swiggyMenu.service");
 
 const getRestaurantMenu = async (req, res) => {
   try {
     const { restaurantId } = req.params;
 
-    // Check database first
+    // Check database for the restaurant menu
     const menu = await Menu.findOne({ restaurantId });
 
-    if (menu) {
-      console.log("Menu found in database");
-
-      return res.status(200).json({
-        success: true,
-        source: "Database",
-        menu,
+    // Menu does not exist in our database
+    if (!menu) {
+      return res.status(404).json({
+        success: false,
+        message: "Menu coming soon",
       });
     }
 
-    console.log("Menu not found. Fetching from Swiggy");
-
-    const swiggyMenu = await getSwiggyMenu(restaurantId);
-
-    const savedMenu = await Menu.create({
-      restaurantId,
-      categories: swiggyMenu.categories,
-    });
-
-    console.log(
-      "Menu fetched from Swiggy and saved"
-    );
+    // Menu found in database
+    console.log("Menu found in database");
 
     return res.status(200).json({
       success: true,
-      source: "Swiggy",
-      menu: savedMenu,
+      source: "Database",
+      menu,
     });
   } catch (error) {
-    console.error("FULL ERROR:");
-    console.error(error.response?.data || error.message);
+    console.error("Failed to fetch restaurant menu:");
+    console.error(error);
 
-    return res.status(502).json({
+    return res.status(500).json({
       success: false,
-      message:  "Restaurant menu is unavailable right now",
-      error: error.message,
+      message: "Failed to fetch restaurant menu",
     });
   }
 };
