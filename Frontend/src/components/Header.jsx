@@ -22,16 +22,6 @@ const Header = () => {
   }
 }
 
-function handleSearch(e) {
-  const searchValue = e.target.value.trim().toLowerCase();
-
-  const filteredRestaurants = allItems.filter((restaurant) =>
-    restaurant.info.name.toLowerCase().includes(searchValue)
-  );
-
-  setHotelList(filteredRestaurants);
-}
-
   return (
     <header className="header">
       <div id="logo">
@@ -44,11 +34,9 @@ function handleSearch(e) {
   <input type="text"
   onChange={(e) => {
     const filterList = allItems.filter((restaurant) => {
-      if(restaurant.info.name.toLowerCase().includes(e.target.value) === true){
-        return true;
-      } else {
-        return false;
-      }
+     restaurant.info.name
+  .toLowerCase()
+  .includes(e.target.value.toLowerCase())
     })
     setHotelList(filterList);
   }} />
